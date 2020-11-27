@@ -1,0 +1,69 @@
+---- OBJECTIVES ----
+
+1) Line Graph : 
+   - Confirmed
+   - Deaths
+   - Recovered
+
+2) Bar Graph :
+   - Any country that a person want to see, by giving country name
+
+
+
+---- PRE-REQUISITES ---
+
+Important methods of The imported libraries
+   1. Pandas
+      - pd.DataFrame(list argument)                                               # Create a list dataitem and then convert it to dataframe
+      - pd.read_csv(csv file location)                                            # Importing a CSV file from pc by specifing the location
+      - pd.read_json(json file location)                                          # Importing Json file from pc by specifing file location
+      - object.loc[row name]                                                      # Getting the data of the specified ROW(horizontal)
+      - object.iloc[row name]                                                     # Same as loc, but takes only a single integer argument
+      - object[['coloumn_name_1','coloumn_name_2',....]]                          # Getting the data of specified COLOUMN(Vertical)
+      - object.drop(['name_1','name_2',....] , axis = 0 , inplace = True)         # Removing the data from the existing dataframe, 
+                                                                                  # Specifing Row by axis = 0 
+                                                                                  # Specifing Coloumn by axis = 1
+                                                                                  # if inplace = True --> Changes made in existing dataframe --> No return value
+                                                                                  # if inplace = False --> Changes made in new dataframe --> new dataframe return value
+
+   2. requests
+      - requests.get(link)                            # Get the link from a specific url
+      - requests.post(link)                           # Post the link to a specific url
+      - requests.delete(link)                         # Delete link to specified url
+
+   3. matplotlib.pyplot
+      - plt.title('TITLE FOR THE PLOT')   
+      - plt.plot(x_axis_variable, y_axis_variable)    # Used to plot a line Graph
+      - plt.bar(x_axis_variable, y_axis_variable)     # Used to plot a bar Graph
+      - plt.show() 
+
+---- PROCEDURE ----
+
+1) Importing Libraries:
+   - import pandas as pd                   # For creating dataframe from json file and performing operations on dataframe  
+   - import matplotlib.pyplot as plt       # For plotting Bar Graphs and Line charts
+   - import requests                       # For importing APIs
+   - import json                           # For converting the requested API to json format  
+
+2) Creating Dataframe:
+   - variable1 = requests.get('API LINK')                          # Getting the link of API
+   - variable2 = variable1.json()                                  # Converting the data from variable1 and returning it as json string format
+   - variable3 = pd.json_normalize(variable2[specified_coloumn])   # Using pandas to convert json string format to dataframe(table) 
+   - print(variable3)                                              # Printing the final dataframe
+
+3) Preview 3 Line charts with legends:
+   - variable3.drop([unnecessary coloums/rows], axis = 1/0 , inplace= True)                                       # Variable3 Now has only the useful coloumns
+   - plt.title("VARIOUS COUNTRIES LINE CHARTS")                                                                   # Title of our line chart
+   - plt.plot(variable3.coloumn_for_x_axis , variable3.coloumn_for_y_axis , label = 'name for legend', 'b.-')     # here b.- represent blue Color Line with dots at values
+   - Above statement use 3 times for Confirmed, Recovered and Deaths as per months of 2020 --> Months as X-axis 
+
+4) Input The country name For BARGRAPH :
+   - cn = input("Enter Country name: ")
+   - plt.ylabel("No of cases")             
+   - plt.xlabel("Status")
+   - plt.title("Detailed Analysis")
+   - index = int(Alldata[Alldata['Country']== cn.capitalize() ].index.values)   # Getting the index of the Country provided by the user
+   - first= Alldata.loc[index]                                                  # Getting all the data of the specified row.
+   - x = ['Confirmed' , 'Recovered' , 'Deaths']                                 # Plotting at x-axis
+   - y = [first.TotalConfirmed, first.TotalRecovered, first.TotalDeaths]        # Plotting at y-axis (data in same order as specified on x-axis)
+   - plt.bar(x,y)                                                               # Plotting a Bar-Graph with the help of x,y mention above
